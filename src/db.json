@@ -1,0 +1,12 @@
+{
+  "cubes": [
+    {
+      "name": {
+        "name": "asdf",
+        "description": "dsfg",
+        "imageUrl": "sdfg",
+        "difficultyLevel": "4"
+      }
+    }
+  ]
+}

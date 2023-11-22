@@ -8,6 +8,7 @@ router.get('/', homeController.getHomePage);
 router.get('/about', homeController.getAboutPage);
 
 router.get('/create', cubeController.getCreateCube);
+router.post('/create', cubeController.postCreateCube);
 
 router.get('/details/:id', (req, res) => {
     res.render('details');
