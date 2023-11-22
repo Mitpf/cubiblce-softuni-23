@@ -13,7 +13,12 @@ class Cube {
 
         try {
             const filePath = path.resolve(__dirname, '../db.json');
-            db.cubes = db.cubes ? db.cubes.concat(cube) : [cube];
+            
+            if (!db.cubes) {
+                db.cubes = [];
+            }
+            db.cubes.push(cube);
+            
             const jsonData = JSON.stringify(db, null, 2);
             await fs.writeFile(filePath, jsonData);
         } catch (error) {

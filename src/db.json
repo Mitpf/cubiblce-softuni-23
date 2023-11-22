@@ -1,12 +1,16 @@
 {
   "cubes": [
     {
-      "name": {
-        "name": "asdf",
-        "description": "dsfg",
-        "imageUrl": "sdfg",
-        "difficultyLevel": "4"
-      }
+      "name": "xcvb",
+      "description": "xcvb",
+      "imageUrl": "xcvb",
+      "difficultyLevel": "4"
+    },
+    {
+      "name": "zxcv",
+      "description": "zxcv",
+      "imageUrl": "zxcv",
+      "difficultyLevel": "4"
     }
   ]
 }
