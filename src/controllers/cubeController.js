@@ -1,5 +1,5 @@
 const Cube = require('../models/Cube.js');
-
+const db = require('../db.json');
 
 //named export
 exports.getCreateCube = (req, res) => {
@@ -12,6 +12,25 @@ exports.postCreateCube = async (req, res) => {
     await Cube.save(cube);
     res.redirect('/');
 };
+
+
+exports.getDetails = (req, res) => {
+    let cubeId = Number(req.params.cubeId);
+
+    if (!cubeId) {
+        return res.redirect('404');
+    }
+
+    let cube = db.cubes.find(x => x.id === cubeId);
+
+    if (!cube) {
+        return res.redirect('404');
+    }
+    console.log('cuuuuuuube', cube)
+    res.render('details', cube );
+};
+
+
 
 /* module.exports={
     getCreateCube

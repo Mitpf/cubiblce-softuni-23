@@ -12,13 +12,14 @@ class Cube {
     static async save(cube) {
 
         try {
+            cube.id = db.cubes[db.cubes.length - 1].id + 1;
             const filePath = path.resolve(__dirname, '../db.json');
-            
+
             if (!db.cubes) {
                 db.cubes = [];
             }
             db.cubes.push(cube);
-            
+
             const jsonData = JSON.stringify(db, null, 2);
             await fs.writeFile(filePath, jsonData);
         } catch (error) {

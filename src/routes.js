@@ -10,9 +10,8 @@ router.get('/about', homeController.getAboutPage);
 router.get('/create', cubeController.getCreateCube);
 router.post('/create', cubeController.postCreateCube);
 
-router.get('/details/:id', (req, res) => {
-    res.render('details');
-});
+router.get('/details/:cubeId', cubeController.getDetails);
+router.get('/details/404', homeController.getErrorPage);
 
 
 module.exports = router;
