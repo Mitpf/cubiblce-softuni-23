@@ -10,11 +10,11 @@ exports.getHomePage = (req, res) => {
     }
 
     if (difficultyFrom) {
-        cubes = cubes.filter(cube => cube.difficultyLevel >= Number(difficultyFrom));
+        cubes = cubes.filter(cube => cube.difficultyLevel >= difficultyFrom);
     }
 
-    if (difficultyFrom) {
-        cubes = cubes.filter(cube => cube.difficultyLevel <= Number(difficultyTo));
+    if (difficultyTo) {
+        cubes = cubes.filter(cube => cube.difficultyLevel <= difficultyTo);
     }
 
     res.render('index', { cubes, search, difficultyFrom, difficultyTo });
