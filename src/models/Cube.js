@@ -1,31 +1,27 @@
-const fs = require('fs/promises');
-let db = require('../db.json');
-const path = require('path');
+const { Schema, model } = require('mongoose');
 
-class Cube {
-    constructor(name, description, imageUrl, difficultyLevel) {
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.difficultyLevel = difficultyLevel;
+const cubeSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+        maxLength: 50
+    },
+    imageUrl: {
+        type: String,
+        required: true,
+        //add vaidation http
+    },
+    difficultyLevel: {
+        type: Number,
+        required: true,
+        max: 6,
+        min: 1,
     }
-    static async save(cube) {
+});
 
-        try {
-            cube.id = db.cubes[db.cubes.length - 1].id + 1;
-            const filePath = path.resolve(__dirname, '../db.json');
-
-            if (!db.cubes) {
-                db.cubes = [];
-            }
-            db.cubes.push(cube);
-
-            const jsonData = JSON.stringify(db, null, 2);
-            await fs.writeFile(filePath, jsonData);
-        } catch (error) {
-            console.error('Error saving cube:', error);
-        }
-    }
-};
-
+const Cube = model('Cube', cubeSchema);
 module.exports = Cube;
