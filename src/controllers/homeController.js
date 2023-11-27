@@ -4,7 +4,7 @@ const Cube = require('../models/Cube.js');
 exports.getHomePage = async (req, res) => {
     const { search, from: difficultyFrom, to: difficultyTo } = req.query;
     //const { search, from: difficultyFrom = 0, to: difficultyTo = Number.MAX_SAFE_INTEGER } = req.query;
-    let cubes = await Cube.find();
+    let cubes = await Cube.find().lean();
     console.log(cubes);
     if (search) {
         cubes = cubes.filter(cube => cube.name.toLowerCase().includes(search.toLowerCase()));

@@ -8,7 +8,7 @@ const cubeSchema = new Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 50
+        maxLength: 500
     },
     imageUrl: {
         type: String,
