@@ -1,4 +1,5 @@
-const Cube = require('../models/Cube_old.js');
+//const Cube = require('../models/Cube_old.js');
+const Cube = require('../models/Cube');
 const db = require('../db.json');
 
 //named export
@@ -7,9 +8,9 @@ exports.getCreateCube = (req, res) => {
 };
 exports.postCreateCube = async (req, res) => {
     const { name, description, imageUrl, difficultyLevel } = req.body;
-    let cube = new Cube(name, description, imageUrl, difficultyLevel);
-    console.log(req.body);
-    await Cube.save(cube);
+    let cube = new Cube({ name, description, imageUrl, difficultyLevel });
+
+    await cube.save();
     res.redirect('/');
 };
 
@@ -27,7 +28,7 @@ exports.getDetails = (req, res) => {
         return res.redirect('/404');
     }
     console.log('cuuuuuuube', cube)
-    res.render('details', cube );
+    res.render('details', cube);
 };
 
 
