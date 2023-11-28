@@ -1,5 +1,6 @@
 //const Cube = require('../models/Cube_old.js');
-const Cube = require('../models/Cube');
+const Cube = require('../models/Cube.js');
+const Accessory = require('../models/Accessory.js');
 
 
 //named export
@@ -25,7 +26,12 @@ exports.getDetails = async (req, res) => {
     res.render('details', cube);
 };
 
-
+exports.getAttachAccessory = async (req, res) => {
+    const cube = await Cube.findById(req.params.cubeId).lean();
+    const accessories = await Accessory.find().lean();
+    console.log(accessories);
+    res.render('cube/attach', { cube, accessories });
+};
 
 /* module.exports={
     getCreateCube

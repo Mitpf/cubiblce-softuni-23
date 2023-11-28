@@ -33,7 +33,7 @@ const accessorySchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 500
+        maxLength: 5000
     },
 });
 
