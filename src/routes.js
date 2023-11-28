@@ -1,3 +1,4 @@
+const accessoryController = require('./controllers/accessoryController.js');
 const cubeController = require('./controllers/cubeController.js');
 const homeController = require('./controllers/homeController.js');
 
@@ -13,6 +14,8 @@ router.post('/create', cubeController.postCreateCube);
 router.get('/details/:cubeId', cubeController.getDetails);
 router.get('/404', homeController.getErrorPage);
 
+
+router.use('/accessory', accessoryController);
 
 module.exports = router;
 
