@@ -33,6 +33,11 @@ exports.getAttachAccessory = async (req, res) => {
     res.render('cube/attach', { cube, accessories });
 };
 
-/* module.exports={
-    getCreateCube
-}; */
+exports.postAttachAccessory = async (req, res) => {
+    const cube = await Cube.findById(req.params.cubeId);
+    const accessoryID = req.body.accessory;
+    cube.accessories.push(accessoryID);
+
+    cube.save();
+    res.redirect(`/cubes/${req.params.cubeId}/details`);
+}
