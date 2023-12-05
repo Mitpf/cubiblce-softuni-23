@@ -1,7 +1,7 @@
 const accessoryController = require('./controllers/accessoryController.js');
 const cubeController = require('./controllers/cubeController.js');
 const homeController = require('./controllers/homeController.js');
-
+const authController = require('./controllers/authController.js');
 const router = require('express').Router();
 
 
@@ -19,6 +19,8 @@ router.post('/cubes/:cubeId/attach', cubeController.postAttachAccessory);
 
 
 router.use('/accessories', accessoryController);
+
+router.use('/', authController);
 
 module.exports = router;
 
