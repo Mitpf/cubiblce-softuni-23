@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: [6,'password is too short, min 6 characters!'],
+        minLength: [6, 'password is too short, min 6 characters!'],
     }
 });
 
@@ -22,6 +22,11 @@ userSchema.pre('save', function (next) {
             next();
         });
 });
+
+userSchema.method('validatePassword', async function (password) {
+    return bcrypt.compare(password, this.password);
+});
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
