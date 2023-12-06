@@ -18,7 +18,7 @@ exports.postCreateCube = async (req, res) => {
 
 exports.getDetails = async (req, res) => {
     const cube = await Cube.findById(req.params.cubeId).populate('accessories').lean();
-    console.log(cube);
+    //console.log(cube);
     if (!cube) {
         return res.redirect('/404');
     }

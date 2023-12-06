@@ -1,3 +1,6 @@
+const config = require('../config');
+const jwt = require('../lib/jsonwebtoken.js');
+
 const User = require('../models/User.js');
 
 // asynchronious function
@@ -11,5 +14,8 @@ exports.login = async (username, password) => {
     if (!user || !isValid) {
         throw 'invalid username or password';
     }
-    return user;
+
+    const payload = { username: user.username };
+    const token = await jwt.sign(payload, config.SECRET, { expiresIn: '2h' });
+    return token;
 };
