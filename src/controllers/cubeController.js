@@ -6,8 +6,9 @@ const cubeService = require('../services/cubeService.js');
 
 const mongoose = require('mongoose');
 //named export
+
 exports.getCreateCube = (req, res) => {
-    res.render('create');
+    res.render('cube/create');
 };
 
 exports.postCreateCube = async (req, res) => {
@@ -69,7 +70,13 @@ exports.postEditCube = async (req, res) => {
 };
 
 exports.getDeleteCube = async (req, res) => {
-    const cube = await cubeService.getOne(req.params.cubeId);
+    const cube = await cubeService.getOne(req.params.cubeId).lean();
 
     res.render('cube/delete', { cube });
+}
+
+exports.postDeleteCube = async (req, res) => {
+  await cubeService.delete(req.params.cubeId);
+
+    res.redirect('/');
 }
