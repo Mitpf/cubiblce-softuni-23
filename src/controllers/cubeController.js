@@ -3,8 +3,9 @@ const Accessory = require('../models/Accessory.js');
 const jwt = require('../lib/jsonwebtoken.js');
 const config = require('../config/index.js');
 const cubeService = require('../services/cubeService.js');
-
+const cubeUtils = require('../utils/cubeUtils.js');
 const mongoose = require('mongoose');
+
 //named export
 
 exports.getCreateCube = (req, res) => {
@@ -13,10 +14,14 @@ exports.getCreateCube = (req, res) => {
 
 exports.postCreateCube = async (req, res) => {
 
-    console.log('req.user', req.user);
-
     const { name, description, imageUrl, difficultyLevel } = req.body;
-    let cube = new Cube({ name, description, imageUrl, difficultyLevel });
+    let cube = new Cube({
+        name,
+        description,
+        imageUrl,
+        difficultyLevel,
+        owner: req.user._id
+    });
 
     await cube.save();
     res.redirect('/');
@@ -24,13 +29,18 @@ exports.postCreateCube = async (req, res) => {
 
 
 exports.getDetails = async (req, res) => {
-    const cube = await Cube.findById(req.params.cubeId).populate('accessories').lean();
-    //console.log(cube);
+    const cube = await Cube.findById(req.params.cubeId)
+        .populate('accessories')
+        .lean();
+
     if (!cube) {
         return res.redirect('/404');
     }
 
-    res.render('cube/details', cube);
+
+    const isOwner = cubeUtils.isOwner(req.user, cube);
+
+    res.render('cube/details', { cube, isOwner });
 };
 
 exports.getAttachAccessory = async (req, res) => {
@@ -52,12 +62,17 @@ exports.postAttachAccessory = async (req, res) => {
 exports.getEditCube = async (req, res) => {
     const cube = await cubeService.getOne(req.params.cubeId).lean();
 
+    if (!cubeUtils.isOwner(req.user, cube)) {
+        res.redirect('404');
+    }
+
     res.render('cube/edit', { cube });
 }
 
 
 exports.postEditCube = async (req, res) => {
     const { name, description, imageUrl, difficultyLevel } = req.body;
+
 
     await cubeService.update(req.params.cubeId, {
         name,
@@ -76,7 +91,7 @@ exports.getDeleteCube = async (req, res) => {
 }
 
 exports.postDeleteCube = async (req, res) => {
-  await cubeService.delete(req.params.cubeId);
+    await cubeService.delete(req.params.cubeId);
 
     res.redirect('/');
 }
