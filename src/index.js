@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const authMiddleware = require('./middlewares/authMiddleware.js');
+const errorHandler = require('./middlewares/errorHanddlermidleware.js');
 
 const initDatabase = require('./config/databaseInit.js');
 
@@ -14,8 +15,11 @@ setupViewEngine(app);
 app.use(express.static('src/public'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(authMiddleware.authentication);
 app.use(routes);
+
+app.use(errorHandler);
 
 initDatabase()
     .then(
